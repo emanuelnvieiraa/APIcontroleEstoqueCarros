@@ -2,6 +2,8 @@
 //npm install express
 // para rodar npm run dev no terminal
 
+//alterar de onde puxa as informações do codigo ao inves de puxar do proprio codigo puxaro do DB!
+
 
 import express from "express";
 import connectDataBase from "./config/dbConnect.js";
@@ -43,52 +45,46 @@ app.get("/cars", (req, res) => {
     res.status(200).json(cars);
 });
 
-app.post("/cars", (req, res) => {
-   cars.push(req.body);
-   //res status(201).json(cars);
-   res.status(201).json("Veículo cadastrado com sucesso!")
-});
-
-app.get("/cars/:id", (req, res) => {
-    const index = searchCar(Number(req.params.id));
-
-    if(index === -1) {
-        res.status(404).json("Veículo não encontrado!")
-    } else{
-        res.status(200).json(cars[index]);
+app.post("/cars", async (req, res) => {
+    try {
+      const newCar = await car.create(req.body);
+      res.status(201).json({ message: "criado com sucesso", car: newCar });
+    } catch (erro) {
+      res.status(500).json({ message: `${erro.message} - falha ao cadastrar livro` });
     }
-});
-app.patch("/cars/id" , (req, res) => {
-    const index = searchCar(Number(req.params.id));
-    if(index === 1){
-        res.status(404).json("Veículo não encontrado!");
-    } else{
-        cars[index].title = req.body.title
-        res.status(200).json(cars);
-    }
-});
+  });
 
-app.delete("/cars/id", (req, res) => {
+  app.get("/cars/:id", (req, res) => {
     const index = searchCar(Number(req.params.id));
-    if(index === -1){
-        res.status(404).json("Veículo não encontrado");
-    } else{
-        cars.splice(index, 1);
-        //res.status(2000).json(cars);
-        res.status(200).json("Veículo removido com sucesso!")
+  
+    if (index === -1) {
+      res.status(404).json("Carro não encontrado");
+    } else {
+      res.status(200).json(books[index]);
     }
-})
+  });
+  app.patch("/cars/:id", (req, res) => {
+    const index = searchCar(Number(req.params.id));
+    if (index === -1) {
+      res.status(404).json("Carro não encontrado");
+    } else {
+      books[index].title = req.body.title;
+      res.status(200).json(cars);
+    }
+  });
+  
 
 app.delete("/cars/:id", (req, res) => {
     const index = searchCar(Number(req.params.id));
-    if(index === -1){
-        res.status(404).json("Veículo não encontrado");
+    if (index === -1) {
+      res.status(404).json("Carro não encontrado");
     } else {
-        cars.splice(index, 1);
-        //res.status(200).json("livro removido com sucesso")
-        res.status(200).json("Veículo removido com sucesso")
+      books.splice(index, 1);
+      //res.status(200).json(books);
+      res.status(200).json("Carro removido com sucesso!!!");
     }
-});
+  });
+
 
 export default app;
 
