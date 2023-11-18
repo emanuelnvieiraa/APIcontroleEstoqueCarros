@@ -32,6 +32,15 @@ const cars = [
         
     },
 ];
+const brand = [
+  {
+     id: 2,
+     name: "Chevrolet",
+     country: "Norte-americana",
+
+      
+  },
+];
 
 //função para buscar o livro pelo ID
 
