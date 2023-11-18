@@ -22,6 +22,11 @@ class brandController {
       const id = req.params.id;
       const brandFound = await brand.findById(id);
 
+      if (!brandFound) {
+        return res.status(404)
+          .send({ message: "autor não encontrado" })
+      }
+
       res.status(200).send(brandFound);
     } catch (erro) {
       res.status(500)
@@ -68,7 +73,24 @@ class brandController {
       res.status(500)
         .json({ message: `${erro.message} - falha ao deletar uma marca` });
     }
+
   }
+  //FUNCAO DE FILTROS
+
+  //static async listBrandsBySearch(req, res){
+  //try{
+  //const(brandName, country) = req.query;
+  //const searchList = {};
+  //if (brandName) searchList.brandName = {$regex: brandName, $options}
+  //if(country) searchList.country = {$regex: country, $options}
+  //const brandFound = await brand.find(searchList).populate("Brand");
+  //res.status(200).send(brandFound);
+  //}catch(erro){
+  //res.status(500)
+  //.json({ message: `${erro.message} - falha ao deletar uma marca` });
+
 }
+//}
+//}
 
 export default brandController;
