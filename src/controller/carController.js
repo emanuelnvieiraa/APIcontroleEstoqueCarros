@@ -4,7 +4,7 @@ import car from '../models/Car.js';
 class carController {
   static async listCars(req, res) {
     try {
-      /* Utiliza o modelo "brand" para buscar todas as marcas na coleção do banco de dados.
+      /* Utiliza o modelo "cars" para buscar todas os carros na coleção do banco de dados.
       A função "find" do mongoose é usada com um objeto vazio como argumento,
        o que significa que ela retornará todos os documentos da coleção.*/
       const carList = await car.find({});
@@ -24,13 +24,13 @@ class carController {
 
       if (!carFound) {
         return res.status(404)
-          .send({ message: "autor não encontrado" })
+          .send({ message: "carro não encontrado" })
       }
 
       res.status(200).send(carFound);
     } catch (erro) {
       res.status(500)
-        .json({ message: `${erro.message} - falha ao listar uma marca` });
+        .json({ message: `${erro.message} - falha ao listar um carro` });
     }
   }
 
@@ -38,10 +38,10 @@ class carController {
     try {
       const newCar = await car.create(req.body);
       res.status(201)
-        .json({ message: "marca criada com sucesso", car: newCar });
+        .json({ message: "carro criado com sucesso", car: newCar });
     } catch (erro) {
       res.status(500)
-        .json({ message: `${erro.message} - falha ao cadastrar marca` });
+        .json({ message: `${erro.message} - falha ao cadastrar carro` });
     }
   }
 
@@ -52,14 +52,14 @@ class carController {
 
       if (updatedCar) {
         res.status(200)
-          .send({ message: "marca atualizado com sucesso", car: updatedCar });
+          .send({ message: "carro atualizado com sucesso", car: updatedCar });
       } else {
         return res.status(404)
-          .send({ message: "marca não encontrada" });
+          .send({ message: "carro não encontrada" });
       }
     } catch (erro) {
       res.status(500)
-        .json({ message: `${erro.message} - falha ao atualizar uma marca` });
+        .json({ message: `${erro.message} - falha ao atualizar um carro` });
     }
   }
 
@@ -68,10 +68,10 @@ class carController {
       const id = req.params.id;
       await car.findByIdAndDelete(id);
       res.status(200)
-        .send({ message: "marca excluida com sucesso" });
+        .send({ message: "carro excluido com sucesso" });
     } catch (erro) {
       res.status(500)
-        .json({ message: `${erro.message} - falha ao deletar uma marca` });
+        .json({ message: `${erro.message} - falha ao deletar um carro` });
     }
 
   }

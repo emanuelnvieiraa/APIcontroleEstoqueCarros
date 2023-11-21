@@ -75,22 +75,22 @@ class brandController {
     }
 
   }
-  //FUNCAO DE FILTROS
 
-  //static async listBrandsBySearch(req, res){
-  //try{
-  //const(brandName, country) = req.query;
-  //const searchList = {};
-  //if (brandName) searchList.brandName = {$regex: brandName, $options}
-  //if(country) searchList.country = {$regex: country, $options}
-  //const brandFound = await brand.find(searchList).populate("Brand");
-  //res.status(200).send(brandFound);
-  //}catch(erro){
-  //res.status(500)
-  //.json({ message: `${erro.message} - falha ao deletar uma marca` });
+
+  static async listBrandsBySearch(req, res){
+  try{
+  const {brandName, country} = req.query;
+  const searchList = {};
+  if (brandName) searchList.brandName = {$regex: brandName}
+  if(country) searchList.country = {$regex: country}
+  const brandFound = await brand.find(searchList).populate("Brand");
+  res.status(200).send(brandFound);
+  }catch(erro){
+  res.status(500)
+  .json({ message: `${erro.message} - falha ao deletar uma marca` });
 
 }
-//}
-//}
+}
+}
 
 export default brandController;
