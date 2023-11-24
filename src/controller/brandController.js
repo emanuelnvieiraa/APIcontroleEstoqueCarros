@@ -1,5 +1,6 @@
 // Quando temos mais de um export no arquivo, precisamos usar a sintaxe abaixo
 import { brand } from "../models/brand.js";
+import mongoose from "mongoose";
 
 class brandController {
   static async listBrands(req, res) {
@@ -24,15 +25,20 @@ class brandController {
 
       if (!brandFound) {
         return res.status(404)
-          .send({ message: "autor não encontrado" })
+          .send({ message: "marca não encontrada" })
       }
 
       res.status(200).send(brandFound);
     } catch (erro) {
-      res.status(500)
-        .json({ message: `${erro.message} - falha ao listar uma marca` });
+      if (erro instanceof mongoose.CastError) {
+        res.status(400)
+          .send({ message: "Id no formato inválido" });
+      } else {
+        res.status(500)
+          .json({ message: `${erro.message} - falha ao listar um Autor` });
     }
   }
+}
 
   static async createBrand(req, res) {
     try {
