@@ -6,7 +6,7 @@ const carSchema = new mongoose.Schema({
     model: {type: String, required: true },
     brand: {type: String},
     year: {type: Number},
-    color: {type: String}, // Adicionado campo de cor
+    color: {type: String}, // Função color adicionada ao código.
 },
 
     {versionKey: false}
