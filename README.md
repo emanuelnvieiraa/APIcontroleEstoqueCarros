@@ -1,2 +1,8 @@
 # APIcontroleEstoqueCarros
-Projeto A3 de sistemas distribuídos e mobile que tem como objetivo criar uma API de sistema de controle de estoque de uma loja automotiva
+Essa Api tem como objetivo gerenciar os carros vendidos por uma concessionária de automóveis onde podem-se cadastrar veículos e marcas. Os veículos podem ser adicionados, excluídos e atualizados caso ocorra algum erro na hora da digitação. Assim como dentro das Requests do código pode ser realizada a requisição de solicitar todos os veículos já vendidos filtrados por modelo, cor, ano e marca.
+
+Vamos a como rodar a API em sua máquina: A API utiliza o framework Express. Então inicialmente deve-se utlizar o comando "npm install express" dentro de seu terminal. Também é necesspário instalar o nodemon com o comando "npm install nodemon". Além de que estamos utilizando o MongoDB um banco de dados NoSQL que também precisa ser instalado para funcionalidade da API rodando o comando "npm install mongoose" dentro de seu Terminal.
+
+Se tudo estiver correto após instalar os frameworks e arquivos necessários basta digitar o comando "npm run dev" em seu terminal para que a API realize a conexão com o banco de dados.
+
+Para fazer as requisições nesse projeto utilizamos a extensão ThunderClient que pode ser instalada gratuitamente em sem Visual Studio Code. Após isso basta selecionar o tipo da requisição como GET para obter os veículos já cadastrados. Caso queira um veículo especifico basta digitar a ID referente ao mesmo. POST para adicionar um veículo conforme o body que está no "carModel" dentro da pasta "models" e preencher os dados da maneira desejada. PATCH para atualizar as informações de um veículo específico caso haja necessidade onde você colocará o body do veículo já cadastrado em que deseja realizar as alterações e DELETE onde inserindo a ID específica de um veículo o mesmo pode ser deletado do banco de dados. 
