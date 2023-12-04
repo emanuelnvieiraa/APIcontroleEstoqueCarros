@@ -7,7 +7,11 @@ class carController {
       /* Utiliza o modelo "cars" para buscar todas os carros na coleção do banco de dados.
       A função "find" do mongoose é usada com um objeto vazio como argumento,
        o que significa que ela retornará todos os documentos da coleção.*/
-      const carList = await car.find({});
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const carList = await car.find({}).skip(skip).limit(limit);
 
       // Envia uma resposta com o status HTTP 200 (OK) e o corpo da resposta contendo a lista de authores no formato JSON.
       res.status(200).send(carList);
@@ -72,25 +76,28 @@ class carController {
     } catch (erro) {
       res.status(500)
         .json({ message: `${erro.message} - falha ao deletar um carro` });
+  
+
+      }
+      //FUNCAO DE FILTROS
+    
+      //static async listBrandsBySearch(req, res){
+      //try{
+      //const(brandName, country) = req.query;
+      //const searchList = {};
+      //if (brandName) searchList.brandName = {$regex: brandName, $options}
+      //if(country) searchList.country = {$regex: country, $options}
+      //const brandFound = await brand.find(searchList).populate("Brand");
+      //res.status(200).send(brandFound);
+      //}catch(erro){
+      //res.status(500)
+      //.json({ message: `${erro.message} - falha ao deletar uma marca` });
+    
     }
+    //}
+    //}
+          }
+  
 
-  }
-  //FUNCAO DE FILTROS
-
-  //static async listBrandsBySearch(req, res){
-  //try{
-  //const(brandName, country) = req.query;
-  //const searchList = {};
-  //if (brandName) searchList.brandName = {$regex: brandName, $options}
-  //if(country) searchList.country = {$regex: country, $options}
-  //const brandFound = await brand.find(searchList).populate("Brand");
-  //res.status(200).send(brandFound);
-  //}catch(erro){
-  //res.status(500)
-  //.json({ message: `${erro.message} - falha ao deletar uma marca` });
-
-}
-//}
-//}
 
 export default carController;

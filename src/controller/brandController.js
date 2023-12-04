@@ -8,7 +8,11 @@ class brandController {
       /* Utiliza o modelo "brand" para buscar todas as marcas na coleção do banco de dados.
       A função "find" do mongoose é usada com um objeto vazio como argumento,
        o que significa que ela retornará todos os documentos da coleção.*/
-      const brandList = await brand.find({});
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const brandList = await brand.find({}).skip(skip).limit(limit);
 
       // Envia uma resposta com o status HTTP 200 (OK) e o corpo da resposta contendo a lista de authores no formato JSON.
       res.status(200).send(brandList);
@@ -36,9 +40,9 @@ class brandController {
       } else {
         res.status(500)
           .json({ message: `${erro.message} - falha ao listar um Autor` });
+      }
     }
   }
-}
 
   static async createBrand(req, res) {
     try {
@@ -82,21 +86,20 @@ class brandController {
 
   }
 
-
+  
   static async listBrandsBySearch(req, res){
-  try{
-  const {brandName, country} = req.query;
-  const searchList = {};
-  if (brandName) searchList.brandName = {$regex: brandName}
-  if(country) searchList.country = {$regex: country}
-  const brandFound = await brand.find(searchList).populate("Brand");
-  res.status(200).send(brandFound);
-  }catch(erro){
-  res.status(500)
-  .json({ message: `${erro.message} - falha ao deletar uma marca` });
-
-}
-}
+    try{
+      const {brandName, country} = req.query;
+      const searchList = {};
+      if (brandName) searchList.brandName = {$regex: brandName}
+      if(country) searchList.country = {$regex: country}
+      const brandFound = await brand.find(searchList).populate("Brand");
+      res.status(200).send(brandFound);
+    }catch(erro){
+      res.status(500)
+      .json({ message: `${erro.message} - falha ao deletar uma marca` });
+    }
+  }
 }
 
 export default brandController;
